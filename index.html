@@ -4,884 +4,495 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Smart Edu - Home </title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #667eea;
-            --primary-dark: #5a67d8;
-            --secondary-color: #764ba2;
-            --accent-color: #f093fb;
-            --success-color: #48bb78;
-            --warning-color: #ed8936;
-            --danger-color: #f56565;
-            --dark-bg: #1a202c;
-            --light-bg: #f7fafc;
-            --text-dark: #2d3748;
-            --text-light: #718096;
-            --white: #ffffff;
-            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            min-height: 100vh;
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 2rem;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Main Container */
-        .container {
-            margin-top: 80px;
-            padding: 2rem;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Login Section */
-        .login-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: calc(100vh - 80px);
-            padding: 2rem;
-        }
-
-        .login-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: var(--shadow-hover);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .login-title {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .login-subtitle {
-            color: var(--text-light);
-            margin-bottom: 2rem;
-        }
-
-        .user-type-selector {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .user-type {
-            padding: 1rem;
-            border: 2px solid transparent;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .user-type:hover,
-        .user-type.active {
-            border-color: var(--primary-color);
-            background: rgba(102, 126, 234, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .user-type-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-dark);
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background: var(--white);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* Dashboard Sections */
-        .dashboard {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .dashboard.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .dashboard-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-
-        .dashboard-title {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .dashboard-subtitle {
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .dashboard-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dashboard-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-right: 1rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: var(--white);
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .card-content {
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: var(--white);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--text-dark);
-            border: 2px solid var(--primary-color);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .logout-btn {
-            position: fixed;
-            top: 100px;
-            right: 2rem;
-            padding: 0.5rem 1rem;
-            background: var(--danger-color);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        /* Tables */
-        .table-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        .table th,
-        .table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .table th {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: var(--white);
-            font-weight: 600;
-        }
-
-        .table tr:hover {
-            background: rgba(102, 126, 234, 0.05);
-        }
-
-        /* Forms */
-        .form-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 1rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .container {
-                padding: 1rem;
-            }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .user-type-selector {
-                grid-template-columns: 1fr;
-            }
-
-            .logout-btn {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin: 1rem 0;
-            }
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, .3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Success/Error Messages */
-        .message {
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .message.success {
-            background: rgba(72, 187, 120, 0.1);
-            color: var(--success-color);
-            border: 1px solid var(--success-color);
-        }
-
-        .message.error {
-            background: rgba(245, 101, 101, 0.1);
-            color: var(--danger-color);
-            border: 1px solid var(--danger-color);
-        }
-    </style>
+    <title>EduTech - Smart School Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <!-- Navigation -->
+    <!-- Navigation Header -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">🎓 EduFlow</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduTech</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#features" class="nav-link">Features</a></li>
+                <li class="nav-item"><a href="#dashboard" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="#login" class="nav-link login-btn">Login</a></li>
             </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </div>
     </nav>
 
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Login Section -->
-        <div id="loginSection" class="login-section">
-            <div class="login-container">
-                <h1 class="login-title">Welcome to EduFlow</h1>
-                <p class="login-subtitle">Advanced School Management System</p>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="gradient-text">Digitalizing Education</span>
+                    <br>For Tomorrow's Leaders
+                </h1>
+                <p class="hero-description">
+                    Revolutionary school management system that connects teachers, students, and administrators
+                    in one powerful digital ecosystem. Experience the future of education management.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Get Started</button>
+                    <button class="btn btn-secondary">Watch Demo</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-cards">
+                    <div class="card card-1">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Teachers</span>
+                    </div>
+                    <div class="card card-2">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Students</span>
+                    </div>
+                    <div class="card card-3">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
 
-                <div class="user-type-selector">
-                    <div class="user-type" data-type="admin">
-                        <div class="user-type-icon">👨‍💼</div>
-                        <div>Admin</div>
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Features</h2>
+                <p class="section-subtitle">Everything you need to manage your school digitally</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
                     </div>
-                    <div class="user-type" data-type="teacher">
-                        <div class="user-type-icon">👨‍🏫</div>
-                        <div>Teacher</div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Automated timetable generation with conflict detection and optimization for maximum efficiency.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
                     </div>
-                    <div class="user-type" data-type="student">
-                        <div class="user-type-icon">👨‍🎓</div>
-                        <div>Student</div>
+                    <h3>Grade Analytics</h3>
+                    <p>Advanced analytics dashboard with real-time insights into student performance and trends.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Communication Hub</h3>
+                    <p>Seamless communication between teachers, students, and parents with instant notifications.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Digital Library</h3>
+                    <p>Comprehensive digital resource center with interactive learning materials and e-books.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Access</h3>
+                    <p>Multi-layered security with role-based access control ensuring data privacy and protection.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Ready</h3>
+                    <p>Fully responsive design that works perfectly on all devices, anywhere, anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Interactive Dashboard</h2>
+                <p class="section-subtitle">Experience different user perspectives</p>
+            </div>
+
+            <!-- Role Selector -->
+            <div class="role-selector">
+                <button class="role-btn active" data-role="student">
+                    <i class="fas fa-user-graduate"></i>
+                    Student
+                </button>
+                <button class="role-btn" data-role="teacher">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    Teacher
+                </button>
+                <button class="role-btn" data-role="admin">
+                    <i class="fas fa-user-shield"></i>
+                    Admin
+                </button>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Student Dashboard -->
+                <div id="student-dashboard" class="dashboard-panel active">
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>My Courses</h3>
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="course-list">
+                                <div class="course-item">
+                                    <span class="course-name">Mathematics</span>
+                                    <span class="course-progress">85%</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-name">Science</span>
+                                    <span class="course-progress">92%</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-name">English</span>
+                                    <span class="course-progress">78%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>Upcoming Tests</h3>
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="test-list">
+                                <div class="test-item">
+                                    <span class="test-subject">Physics Quiz</span>
+                                    <span class="test-date">March 15</span>
+                                </div>
+                                <div class="test-item">
+                                    <span class="test-subject">History Essay</span>
+                                    <span class="test-date">March 18</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>Grade Overview</h3>
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div class="grade-chart">
+                                <div class="grade-item">
+                                    <span class="subject">Math</span>
+                                    <div class="grade-bar">
+                                        <div class="grade-fill" style="width: 85%"></div>
+                                    </div>
+                                    <span class="grade-value">A</span>
+                                </div>
+                                <div class="grade-item">
+                                    <span class="subject">Science</span>
+                                    <div class="grade-bar">
+                                        <div class="grade-fill" style="width: 92%"></div>
+                                    </div>
+                                    <span class="grade-value">A+</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label class="form-label">Username</label>
-                        <input type="text" class="form-input" id="username" required>
+                <!-- Teacher Dashboard -->
+                <div id="teacher-dashboard" class="dashboard-panel">
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>My Classes</h3>
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="class-list">
+                                <div class="class-item">
+                                    <span class="class-name">Grade 10A - Mathematics</span>
+                                    <span class="student-count">28 students</span>
+                                </div>
+                                <div class="class-item">
+                                    <span class="class-name">Grade 11B - Advanced Math</span>
+                                    <span class="student-count">24 students</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>Recent Assignments</h3>
+                                <i class="fas fa-clipboard-list"></i>
+                            </div>
+                            <div class="assignment-list">
+                                <div class="assignment-item">
+                                    <span class="assignment-name">Algebra Test</span>
+                                    <span class="submissions">15/28 submitted</span>
+                                </div>
+                                <div class="assignment-item">
+                                    <span class="assignment-name">Geometry Project</span>
+                                    <span class="submissions">22/24 submitted</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>Class Performance</h3>
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="performance-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Average Grade</span>
+                                    <span class="stat-value">B+</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Attendance</span>
+                                    <span class="stat-value">94%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Dashboard -->
+                <div id="admin-dashboard" class="dashboard-panel">
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>School Statistics</h3>
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="stats-grid">
+                                <div class="stat-box">
+                                    <span class="stat-number">1,247</span>
+                                    <span class="stat-label">Students</span>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-number">89</span>
+                                    <span class="stat-label">Teachers</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>System Health</h3>
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div class="health-indicators">
+                                <div class="health-item">
+                                    <span class="indicator active"></span>
+                                    <span>Database: Online</span>
+                                </div>
+                                <div class="health-item">
+                                    <span class="indicator active"></span>
+                                    <span>API: Responsive</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>Recent Activity</h3>
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="activity-feed">
+                                <div class="activity-item">
+                                    <span class="activity-text">New student registered</span>
+                                    <span class="activity-time">2 hours ago</span>
+                                </div>
+                                <div class="activity-item">
+                                    <span class="activity-text">Grade reports generated</span>
+                                    <span class="activity-time">5 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="login" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Welcome Back</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="userType">Login as:</label>
+                    <select id="userType" name="userType" required>
+                        <option value="">Select Role</option>
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+
+                <div class="form-footer">
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Ready to digitalize your school? Let's talk!</p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email Us</h3>
+                            <p>info@edutech.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Call Us</h3>
+                            <p>+20 123 456 7890</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Visit Us</h3>
+                            <p>123 Education Street, Cairo, Egypt</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-input" id="password" required>
+                        <input type="text" placeholder="Subject" required>
                     </div>
-                    <button type="submit" class="login-btn">
-                        <span id="loginText">Login</span>
-                        <span id="loginLoading" class="loading" style="display: none;"></span>
-                    </button>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
             </div>
         </div>
+    </section>
 
-        <!-- Admin Dashboard -->
-        <div id="adminDashboard" class="dashboard">
-            <button class="logout-btn" onclick="logout()">Logout</button>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>EduTech</span>
+                    </div>
+                    <p>Empowering education through innovative digital solutions. Building the future of learning, one
+                        school at a time.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
 
-            <div class="dashboard-header">
-                <h1 class="dashboard-title">Admin Dashboard</h1>
-                <p class="dashboard-subtitle">Complete school management at your fingertips</p>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Solutions</h3>
+                    <ul>
+                        <li><a href="#">Student Management</a></li>
+                        <li><a href="#">Grade Tracking</a></li>
+                        <li><a href="#">Communication Tools</a></li>
+                        <li><a href="#">Analytics Dashboard</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Training</a></li>
+                        <li><a href="#">System Status</a></li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">245</div>
-                    <div class="stat-label">Total Students</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">18</div>
-                    <div class="stat-label">Teachers</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">Classes</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">8</div>
-                    <div class="stat-label">Subjects</div>
-                </div>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">👥</div>
-                        <div class="card-title">Student Management</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Manage student records, enrollment, and academic progress. View detailed profiles and track
-                            performance.</p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('studentManagement')">Manage
-                                Students</button>
-                            <button class="btn btn-secondary" onclick="showSection('addStudent')">Add New
-                                Student</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">👨‍🏫</div>
-                        <div class="card-title">Teacher Management</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Handle teacher assignments, schedules, and performance evaluations. Assign subjects and
-                            classes.</p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('teacherManagement')">Manage
-                                Teachers</button>
-                            <button class="btn btn-secondary" onclick="showSection('addTeacher')">Add New
-                                Teacher</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">📚</div>
-                        <div class="card-title">Academic Management</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Oversee curriculum, exam schedules, grade books, and academic calendar management.</p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('academicManagement')">View
-                                Academics</button>
-                            <button class="btn btn-secondary" onclick="showSection('examSchedule')">Exam
-                                Schedule</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">💰</div>
-                        <div class="card-title">Financial Management</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Track tuition fees, expenses, payroll, and generate financial reports for better budget
-                            control.</p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('financialReports')">View
-                                Reports</button>
-                            <button class="btn btn-secondary" onclick="showSection('feeManagement')">Fee
-                                Management</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">📊</div>
-                        <div class="card-title">Analytics & Reports</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Generate comprehensive reports on attendance, performance, and institutional metrics.</p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('analytics')">View Analytics</button>
-                            <button class="btn btn-secondary" onclick="showSection('customReports')">Custom
-                                Reports</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">⚙️</div>
-                        <div class="card-title">System Settings</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Configure system preferences, user permissions, backup settings, and security protocols.</p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('systemSettings')">Settings</button>
-                            <button class="btn btn-secondary"
-                                onclick="showSection('userPermissions')">Permissions</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EduTech. All rights reserved. | Designed for Codex Competition</p>
             </div>
         </div>
+    </footer>
 
-        <!-- Teacher Dashboard -->
-        <div id="teacherDashboard" class="dashboard">
-            <button class="logout-btn" onclick="logout()">Logout</button>
+    <!-- JavaScript for Interactivity -->
+    <script src="js/script.js"></script>
+</body>
 
-            <div class="dashboard-header">
-                <h1 class="dashboard-title">Teacher Dashboard</h1>
-                <p class="dashboard-subtitle">Empower your teaching with smart tools</p>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">My Classes</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">127</div>
-                    <div class="stat-label">My Students</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Subjects</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">Pending Grades</div>
-                </div>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">📋</div>
-                        <div class="card-title">Class Management</div>
-                    </div>
-                    <div class="card-content">
-                        <p>View your assigned classes, student lists, and manage daily classroom activities effectively.
-                        </p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('myClasses')">My Classes</button>
-                            <button class="btn btn-secondary" onclick="showSection('classSchedule')">Schedule</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">✅</div>
-                        <div class="card-title">Attendance Tracking</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Mark daily attendance, generate attendance reports, and monitor student participation
-                            patterns.</p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('markAttendance')">Mark
-                                Attendance</button>
-                            <button class="btn btn-secondary"
-                                onclick="showSection('attendanceReports')">Reports</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">📝</div>
-                        <div class="card-title">Grade Management</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Enter grades, create assessments, and provide detailed feedback on student performance.</p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('enterGrades')">Enter Grades</button>
-                            <button class="btn btn-secondary" onclick="showSection('createAssessment')">Create
-                                Assessment</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">📚</div>
-                        <div class="card-title">Lesson Planning</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Create and manage lesson plans, upload resources, and organize curriculum materials.</p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('lessonPlans')">Lesson Plans</button>
-                            <button class="btn btn-secondary" onclick="showSection('resources')">Resources</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">💬</div>
-                        <div class="card-title">Communication</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Send messages to students and parents, schedule meetings, and maintain communication logs.
-                        </p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('sendMessage')">Send Message</button>
-                            <button class="btn btn-secondary" onclick="showSection('parentMeetings')">Parent
-                                Meetings</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">📊</div>
-                        <div class="card-title">Student Progress</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Monitor individual student progress, identify areas for improvement, and track academic
-                            growth.</p>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="showSection('studentProgress')">View
-                                Progress</button>
-                            <button class="btn btn-secondary" onclick="showSection('progressReports')">Generate
-                                Reports</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Student Dashboard -->
-        <div id="studentDashboard" class="dashboard">
-            <button class="logout-btn" onclick="logout()">Logout</button>
-
-            <div class="dashboard-header">
-                <h1 class="dashboard-title">Student Dashboard</h1>
-                <p class="dashboard-subtitle">Your academic journey, simplified</p>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">6</div>
-                    <div class="stat-label">Subjects</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">92%</div>
-                    <div class="stat-label">Attendance</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">A-</div>
-                    <div class="stat-label">Current GPA</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Pending Assignments</div>
-                </div>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon">📅</div>
-                        <div class="card-title">My Schedule</div>
-                    </div>
-                    <div class="card-content">
-                        <p>View your daily class schedule, upcoming exams, and important academic dates.</p>
-                        <div class="action
+</html>
